@@ -1,0 +1,31 @@
+{% extends 'default.html' %}
+
+
+<style>
+    .ul {
+        margin-bottom: 20px;    /* Отступ между новостями */
+        padding-bottom: 20px;   /* Отступ внутри блока новости */
+        border-bottom: 1px solid #ddd;  /* Горизонтальная черта */
+    }
+    .news-title {
+        margin-bottom: 15px;    /* Отступ между заголовком и текстом */
+    }
+</style>
+
+{% block content %}
+<h1 style="margin-bottom: 50px; border-bottom: 5px double #000;">Все новости</h1>
+<ul style="list-style-type: none; padding-left: 0;">
+    {% for post in posts %}
+    <li style="margin-bottom: 50px; border-bottom: 2px dashed #000;">
+        <h2>{{ post.title }}</h2>
+        <small style="border-bottom: 1px solid #000;">{{ post.time_in|date:'d M Y' }}</small>
+        <p>{{ post.text|truncatewords:20 }}</p>
+
+    </li>
+    {% endfor %}
+</ul>
+{% endblock content %}
+
+
+
+
