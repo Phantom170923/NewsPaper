@@ -1,0 +1,92 @@
+from news.models import *
+from django.contrib.auth.models import User
+
+user1 = User.objects.create_user('username1')
+user2 = User.objects.create_user('username2')
+
+author1 = Author.objects.create(user=user1)
+author2 = Author.objects.create(user=user2)
+
+category1 = Category.objects.create(name_category='sport')
+category2 = Category.objects.create(name_category='war')
+category3 = Category.objects.create(name_category='politic')
+category4 = Category.objects.create(name_category='music')
+
+article1 = Post.objects.create(author=author1, choice='article', title='title1', text='text article1')
+article2 = Post.objects.create(author=author2, choice='article', title='title2', text='text article2')
+news1 = Post.objects.create(author=author1, choice='news', title='title_text', text='text news')
+
+article1.categories.add(category2, category3)
+article2.categories.add(category1, category2)
+news1.categories.add(category1, category4)
+
+comment1 = Comment.objects.create(post=article1, user=user1, text='cool')
+comment2 = Comment.objects.create(post=article2, user=user2, text='great')
+comment3 = Comment.objects.create(post=news1, user=user2, text='well')
+comment4 = Comment.objects.create(post=news1, user=user1, text='hello, it is great')
+
+article1.like()
+article1.like()
+article1.like()
+article1.dislike()
+
+article2.dislike()
+article2.like()
+article2.like()
+article2.like()
+article2.like()
+
+news1.like()
+news1.like()
+news1.like()
+news1.like()
+news1.like()
+news1.like()
+news1.dislike()
+news1.dislike()
+news1.dislike()
+news1.dislike()
+
+comment1.like()
+comment1.like()
+comment1.like()
+comment1.like()
+comment1.like()
+comment1.like()
+
+comment2.like()
+comment2.dislike()
+comment2.like()
+comment2.like()
+comment2.like()
+comment2.dislike()
+
+comment3.like()
+comment3.like()
+comment3.like()
+comment3.like()
+comment3.like()
+comment3.like()
+comment3.dislike()
+
+comment4.like()
+comment4.like()
+comment4.like()
+comment4.like()
+comment4.dislike()
+comment4.dislike()
+
+author1.update_rating()
+author2.update_rating()
+
+best_post = Post.objects.order_by('-rating').first()
+print(best_post.time_in)
+print(best_post.author.user.username)
+print(best_post.rating)
+print(best_post.title)
+print(best_post.preview())
+
+comments.all().values('time_in', 'user__username', 'rating', 'text')
+
+best_user = Author.objects.order_by('-rating').values('user__username', 'rating').first()
+print(best_user)

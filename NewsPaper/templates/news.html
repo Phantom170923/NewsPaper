@@ -1,0 +1,53 @@
+{% extends 'default.html' %}
+
+
+<style>
+    .ul {
+        margin-bottom: 20px;    /* Отступ между новостями */
+        padding-bottom: 20px;   /* Отступ внутри блока новости */
+        border-bottom: 1px solid #ddd;  /* Горизонтальная черта */
+    }
+    .news-title {
+        margin-bottom: 15px;    /* Отступ между заголовком и текстом */
+    }
+</style>
+
+{% block content %}
+<h1 style="margin-bottom: 50px; border-bottom: 5px double #000;">Все новости</h1>
+<form action="" method="get">
+       {{ filterset.form.as_p }}
+       <input type="submit" value="Найти" />
+   </form>
+<ul style="list-style-type: none; padding-left: 0;">
+    {% for post in posts %}
+    <li style="margin-bottom: 50px; border-bottom: 2px dashed #000;">
+        <h2>{{ post.title }}</h2>
+        <small style="border-bottom: 1px solid #000;">{{ post.time_in|date:'d M Y' }}</small>
+        <p>{{ post.text|truncatewords:20 }}</p>
+
+    </li>
+    {% endfor %}
+</ul>
+    {% if page_obj.has_previous %}
+       <a href="?page=1">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+
+   {{ page_obj.number }}
+
+   {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
+
+{% endblock content %}
+
+
+
+

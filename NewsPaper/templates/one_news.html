@@ -1,0 +1,18 @@
+{% extends 'default.html' %}
+
+{% load custom_filters %}
+
+{% block content %}
+<h1 style="margin-bottom: 50px; border-bottom: 5px double #000;">Новости</h1>
+
+{% if post %}
+    <h2>{{ post.title|censor }}</h2>
+    <small style="border-bottom: 2px solid #000;">{{ post.time_in|date:'d M Y' }}</small>
+    <p>{{ post.text|censor }}</p>
+    <p style="float: right;">{{ post.author }}</p>
+{% else %}
+    <p>Таких новостей нет</p>
+{% endif %}
+
+
+{% endblock content %}
